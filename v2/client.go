@@ -710,3 +710,8 @@ func (c *Client) NewSpotRebateHistoryService() *SpotRebateHistoryService {
 func (c *Client) NewConvertTradeHistoryService() *ConvertTradeHistoryService {
 	return &ConvertTradeHistoryService{c: c}
 }
+
+// NewTradeFeeService init trade fee service
+func (c *Client) NewTradeFeeService() *TradeFeeService {
+	return &TradeFeeService{c: c}
+}
