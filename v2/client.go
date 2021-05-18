@@ -621,3 +621,8 @@ func (c *Client) NewListDustLogService() *ListDustLogService {
 func (c *Client) NewDustTransferService() *DustTransferService {
 	return &DustTransferService{c: c}
 }
+
+// NewTradeFeeService init trade fee service
+func (c *Client) NewTradeFeeService() *TradeFeeService {
+    return &TradeFeeService{c: c}
+}
