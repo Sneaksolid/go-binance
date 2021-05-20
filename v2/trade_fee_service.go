@@ -3,6 +3,7 @@ package binance
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 )
 
 type TradeFeeService struct {
@@ -30,6 +31,7 @@ func (s TradeFeeService) Do(ctx context.Context, opts ...RequestOption) (res []*
 		return nil, err
 	}
 	res = make([]*TradeFee, 0)
+    fmt.Println(string(data))
 	err = json.Unmarshal(data, &res)
 	if err != nil {
 		return nil, err
