@@ -6,7 +6,13 @@ import (
 )
 
 type TradeFeeService struct {
-	c *Client
+	c      *Client
+	symbol *string
+}
+
+func (s *TradeFeeService) Symbol(symbol string) *TradeFeeService {
+	s.symbol = &symbol
+	return s
 }
 
 func (s TradeFeeService) Do(ctx context.Context, opts ...RequestOption) (res []*TradeFee, err error) {
@@ -14,6 +20,9 @@ func (s TradeFeeService) Do(ctx context.Context, opts ...RequestOption) (res []*
 		method:   "GET",
 		endpoint: "/sapi/v1/asset/tradeFee",
 		secType:  secTypeSigned,
+	}
+	if s.symbol != nil {
+		r.setParam("symbol", s.symbol)
 	}
 
 	data, err := s.c.callAPI(ctx, r, opts...)
