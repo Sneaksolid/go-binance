@@ -23,7 +23,7 @@ func (s TradeFeeService) Do(ctx context.Context, opts ...RequestOption) (res []*
 		secType:  secTypeSigned,
 	}
 	if s.symbol != nil {
-		r.setParam("symbol", s.symbol)
+		r.setParam("symbol", *s.symbol)
 	}
 
 	data, err := s.c.callAPI(ctx, r, opts...)
