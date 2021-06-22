@@ -14,10 +14,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/adshao/go-binance/v2/common"
-	"github.com/adshao/go-binance/v2/delivery"
-	"github.com/adshao/go-binance/v2/futures"
 	"github.com/bitly/go-simplejson"
+	"github.com/trever-io/go-binance/v2/common"
+	"github.com/trever-io/go-binance/v2/delivery"
+	"github.com/trever-io/go-binance/v2/futures"
 )
 
 // SideType define side type of order
@@ -627,5 +627,5 @@ func (c *Client) NewDustTransferService() *DustTransferService {
 
 // NewTradeFeeService init trade fee service
 func (c *Client) NewTradeFeeService() *TradeFeeService {
-    return &TradeFeeService{c: c}
+	return &TradeFeeService{c: c}
 }
