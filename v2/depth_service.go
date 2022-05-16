@@ -7,6 +7,12 @@ import (
 	"github.com/trever-io/go-binance/v2/common"
 )
 
+type BinanceDepthService interface {
+	Symbol(symbol string) BinanceDepthService
+	Limit(limit int) BinanceDepthService
+	Do(ctx context.Context, opts ...RequestOption) (res *DepthResponse, err error)
+}
+
 // DepthService show depth info
 type DepthService struct {
 	c      *Client
@@ -15,13 +21,13 @@ type DepthService struct {
 }
 
 // Symbol set symbol
-func (s *DepthService) Symbol(symbol string) *DepthService {
+func (s *DepthService) Symbol(symbol string) BinanceDepthService {
 	s.symbol = symbol
 	return s
 }
 
 // Limit set limit
-func (s *DepthService) Limit(limit int) *DepthService {
+func (s *DepthService) Limit(limit int) BinanceDepthService {
 	s.limit = &limit
 	return s
 }

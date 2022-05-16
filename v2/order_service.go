@@ -6,6 +6,23 @@ import (
 	"net/http"
 )
 
+type BinanceCreateOrderService interface {
+	Symbol(symbol string) BinanceCreateOrderService
+	Side(side SideType) BinanceCreateOrderService
+	Type(orderType OrderType) BinanceCreateOrderService
+	TimeInForce(timeInForce TimeInForceType) BinanceCreateOrderService
+	Quantity(quantity string) BinanceCreateOrderService
+	QuoteOrderQty(quoteOrderQty string) BinanceCreateOrderService
+	Price(price string) BinanceCreateOrderService
+	NewClientOrderID(newClientOrderID string) BinanceCreateOrderService
+	StopPrice(stopPrice string) BinanceCreateOrderService
+	IcebergQuantity(icebergQuantity string) BinanceCreateOrderService
+	NewOrderRespType(newOrderRespType NewOrderRespType) BinanceCreateOrderService
+	createOrder(ctx context.Context, endpoint string, opts ...RequestOption) (data []byte, err error)
+	Do(ctx context.Context, opts ...RequestOption) (res *CreateOrderResponse, err error)
+	Test(ctx context.Context, opts ...RequestOption) (err error)
+}
+
 // CreateOrderService create order
 type CreateOrderService struct {
 	c                *Client
@@ -23,67 +40,67 @@ type CreateOrderService struct {
 }
 
 // Symbol set symbol
-func (s *CreateOrderService) Symbol(symbol string) *CreateOrderService {
+func (s *CreateOrderService) Symbol(symbol string) BinanceCreateOrderService {
 	s.symbol = symbol
 	return s
 }
 
 // Side set side
-func (s *CreateOrderService) Side(side SideType) *CreateOrderService {
+func (s *CreateOrderService) Side(side SideType) BinanceCreateOrderService {
 	s.side = side
 	return s
 }
 
 // Type set type
-func (s *CreateOrderService) Type(orderType OrderType) *CreateOrderService {
+func (s *CreateOrderService) Type(orderType OrderType) BinanceCreateOrderService {
 	s.orderType = orderType
 	return s
 }
 
 // TimeInForce set timeInForce
-func (s *CreateOrderService) TimeInForce(timeInForce TimeInForceType) *CreateOrderService {
+func (s *CreateOrderService) TimeInForce(timeInForce TimeInForceType) BinanceCreateOrderService {
 	s.timeInForce = &timeInForce
 	return s
 }
 
 // Quantity set quantity
-func (s *CreateOrderService) Quantity(quantity string) *CreateOrderService {
+func (s *CreateOrderService) Quantity(quantity string) BinanceCreateOrderService {
 	s.quantity = &quantity
 	return s
 }
 
 // QuoteOrderQty set quoteOrderQty
-func (s *CreateOrderService) QuoteOrderQty(quoteOrderQty string) *CreateOrderService {
+func (s *CreateOrderService) QuoteOrderQty(quoteOrderQty string) BinanceCreateOrderService {
 	s.quoteOrderQty = &quoteOrderQty
 	return s
 }
 
 // Price set price
-func (s *CreateOrderService) Price(price string) *CreateOrderService {
+func (s *CreateOrderService) Price(price string) BinanceCreateOrderService {
 	s.price = &price
 	return s
 }
 
 // NewClientOrderID set newClientOrderID
-func (s *CreateOrderService) NewClientOrderID(newClientOrderID string) *CreateOrderService {
+func (s *CreateOrderService) NewClientOrderID(newClientOrderID string) BinanceCreateOrderService {
 	s.newClientOrderID = &newClientOrderID
 	return s
 }
 
 // StopPrice set stopPrice
-func (s *CreateOrderService) StopPrice(stopPrice string) *CreateOrderService {
+func (s *CreateOrderService) StopPrice(stopPrice string) BinanceCreateOrderService {
 	s.stopPrice = &stopPrice
 	return s
 }
 
 // IcebergQuantity set icebergQuantity
-func (s *CreateOrderService) IcebergQuantity(icebergQuantity string) *CreateOrderService {
+func (s *CreateOrderService) IcebergQuantity(icebergQuantity string) BinanceCreateOrderService {
 	s.icebergQuantity = &icebergQuantity
 	return s
 }
 
 // NewOrderRespType set icebergQuantity
-func (s *CreateOrderService) NewOrderRespType(newOrderRespType NewOrderRespType) *CreateOrderService {
+func (s *CreateOrderService) NewOrderRespType(newOrderRespType NewOrderRespType) BinanceCreateOrderService {
 	s.newOrderRespType = &newOrderRespType
 	return s
 }
@@ -412,6 +429,13 @@ func (s *ListOpenOrdersService) Do(ctx context.Context, opts ...RequestOption) (
 	return res, nil
 }
 
+type BinanceGetOrderService interface {
+	Symbol(symbol string) BinanceGetOrderService
+	OrderID(orderID int64) BinanceGetOrderService
+	OrigClientOrderID(origClientOrderID string) BinanceGetOrderService
+	Do(ctx context.Context, opts ...RequestOption) (res *Order, err error)
+}
+
 // GetOrderService get an order
 type GetOrderService struct {
 	c                 *Client
@@ -421,19 +445,19 @@ type GetOrderService struct {
 }
 
 // Symbol set symbol
-func (s *GetOrderService) Symbol(symbol string) *GetOrderService {
+func (s *GetOrderService) Symbol(symbol string) BinanceGetOrderService {
 	s.symbol = symbol
 	return s
 }
 
 // OrderID set orderID
-func (s *GetOrderService) OrderID(orderID int64) *GetOrderService {
+func (s *GetOrderService) OrderID(orderID int64) BinanceGetOrderService {
 	s.orderID = &orderID
 	return s
 }
 
 // OrigClientOrderID set origClientOrderID
-func (s *GetOrderService) OrigClientOrderID(origClientOrderID string) *GetOrderService {
+func (s *GetOrderService) OrigClientOrderID(origClientOrderID string) BinanceGetOrderService {
 	s.origClientOrderID = &origClientOrderID
 	return s
 }

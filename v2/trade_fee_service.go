@@ -5,12 +5,17 @@ import (
 	"encoding/json"
 )
 
+type BinanceTradeFeeService interface {
+	Symbol(symbol string) BinanceTradeFeeService
+	Do(ctx context.Context, opts ...RequestOption) (res []*TradeFee, err error)
+}
+
 type TradeFeeService struct {
 	c      *Client
 	symbol *string
 }
 
-func (s *TradeFeeService) Symbol(symbol string) *TradeFeeService {
+func (s *TradeFeeService) Symbol(symbol string) BinanceTradeFeeService {
 	s.symbol = &symbol
 	return s
 }

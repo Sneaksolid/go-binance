@@ -5,6 +5,10 @@ import (
 	"net/http"
 )
 
+type BinancePingService interface {
+	Do(ctx context.Context, opts ...RequestOption) (err error)
+}
+
 // PingService ping server
 type PingService struct {
 	c *Client
@@ -41,6 +45,10 @@ func (s *ServerTimeService) Do(ctx context.Context, opts ...RequestOption) (serv
 	}
 	serverTime = j.Get("serverTime").MustInt64()
 	return serverTime, nil
+}
+
+type BinanceSetServerTimeService interface {
+	Do(ctx context.Context, opts ...RequestOption) (timeOffset int64, err error)
 }
 
 // SetServerTimeService set server time

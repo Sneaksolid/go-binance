@@ -7,6 +7,12 @@ import (
 	"strings"
 )
 
+type BinanceExchangeInfoService interface {
+	Symbol(symbol string) BinanceExchangeInfoService
+	Symbols(symbols ...string) BinanceExchangeInfoService
+	Do(ctx context.Context, opts ...RequestOption) (res *ExchangeInfo, err error)
+}
+
 // ExchangeInfoService exchange info service
 type ExchangeInfoService struct {
 	c       *Client
@@ -15,13 +21,13 @@ type ExchangeInfoService struct {
 }
 
 // Symbol set symbol
-func (s *ExchangeInfoService) Symbol(symbol string) *ExchangeInfoService {
+func (s *ExchangeInfoService) Symbol(symbol string) BinanceExchangeInfoService {
 	s.symbol = symbol
 	return s
 }
 
 // Symbols set symbol
-func (s *ExchangeInfoService) Symbols(symbols ...string) *ExchangeInfoService {
+func (s *ExchangeInfoService) Symbols(symbols ...string) BinanceExchangeInfoService {
 	if len(symbols) == 0 {
 		s.symbols = "[]"
 	} else {

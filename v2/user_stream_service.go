@@ -5,6 +5,10 @@ import (
 	"net/http"
 )
 
+type BinanceStartUserStreamService interface {
+	Do(ctx context.Context, opts ...RequestOption) (listenKey string, err error)
+}
+
 // StartUserStreamService create listen key for user stream service
 type StartUserStreamService struct {
 	c *Client
@@ -29,6 +33,11 @@ func (s *StartUserStreamService) Do(ctx context.Context, opts ...RequestOption) 
 	return listenKey, nil
 }
 
+type BinanceKeepaliveUserStreamService interface {
+	ListenKey(listenKey string) BinanceKeepaliveUserStreamService
+	Do(ctx context.Context, opts ...RequestOption) (err error)
+}
+
 // KeepaliveUserStreamService update listen key
 type KeepaliveUserStreamService struct {
 	c         *Client
@@ -36,7 +45,7 @@ type KeepaliveUserStreamService struct {
 }
 
 // ListenKey set listen key
-func (s *KeepaliveUserStreamService) ListenKey(listenKey string) *KeepaliveUserStreamService {
+func (s *KeepaliveUserStreamService) ListenKey(listenKey string) BinanceKeepaliveUserStreamService {
 	s.listenKey = listenKey
 	return s
 }

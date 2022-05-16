@@ -42,6 +42,10 @@ func (s *GetAssetDetailService) Do(ctx context.Context) (res map[string]AssetDet
 	return res, nil
 }
 
+type BinanceGetAllCoinsInfoService interface {
+	Do(ctx context.Context) (res []*CoinInfo, err error)
+}
+
 type GetAllCoinsInfoService struct {
 	c     *Client
 	asset *string

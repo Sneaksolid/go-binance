@@ -212,6 +212,25 @@ func NewDeliveryClient(apiKey, secretKey string) *delivery.Client {
 
 type doFunc func(req *http.Request) (*http.Response, error)
 
+type BinanceClient interface {
+	NewSetServerTimeService() BinanceSetServerTimeService
+	NewStartUserStreamService() BinanceStartUserStreamService
+	NewKeepaliveUserStreamService() BinanceKeepaliveUserStreamService
+	NewListTradesService() BinanceListTradesService
+	NewCreateOrderService() BinanceCreateOrderService
+	NewExchangeInfoService() BinanceExchangeInfoService
+	NewGetAccountService() BinanceGetAccountService
+	NewGetOrderService() BinanceGetOrderService
+	NewPingService() BinancePingService
+	NewTradeFeeService() BinanceTradeFeeService
+	NewDepthService() BinanceDepthService
+	NewListPricesService() BinanceListPricesService
+	NewListWithdrawsService() BinanceListWithdrawsService
+	NewListDepositsService() BinanceListDepositsService
+	NewCreateWithdrawService() BinanceCreateWithdrawService
+	NewGetAllCoinsInfoService() BinanceGetAllCoinsInfoService
+}
+
 // Client define API client
 type Client struct {
 	APIKey     string
@@ -337,7 +356,7 @@ func (c *Client) callAPI(ctx context.Context, r *request, opts ...RequestOption)
 }
 
 // NewPingService init ping service
-func (c *Client) NewPingService() *PingService {
+func (c *Client) NewPingService() BinancePingService {
 	return &PingService{c: c}
 }
 
@@ -347,12 +366,12 @@ func (c *Client) NewServerTimeService() *ServerTimeService {
 }
 
 // NewSetServerTimeService init set server time service
-func (c *Client) NewSetServerTimeService() *SetServerTimeService {
+func (c *Client) NewSetServerTimeService() BinanceSetServerTimeService {
 	return &SetServerTimeService{c: c}
 }
 
 // NewDepthService init depth service
-func (c *Client) NewDepthService() *DepthService {
+func (c *Client) NewDepthService() BinanceDepthService {
 	return &DepthService{c: c}
 }
 
@@ -377,7 +396,7 @@ func (c *Client) NewListPriceChangeStatsService() *ListPriceChangeStatsService {
 }
 
 // NewListPricesService init listing prices service
-func (c *Client) NewListPricesService() *ListPricesService {
+func (c *Client) NewListPricesService() BinanceListPricesService {
 	return &ListPricesService{c: c}
 }
 
@@ -387,7 +406,7 @@ func (c *Client) NewListBookTickersService() *ListBookTickersService {
 }
 
 // NewCreateOrderService init creating order service
-func (c *Client) NewCreateOrderService() *CreateOrderService {
+func (c *Client) NewCreateOrderService() BinanceCreateOrderService {
 	return &CreateOrderService{c: c}
 }
 
@@ -402,7 +421,7 @@ func (c *Client) NewCancelOCOService() *CancelOCOService {
 }
 
 // NewGetOrderService init get order service
-func (c *Client) NewGetOrderService() *GetOrderService {
+func (c *Client) NewGetOrderService() BinanceGetOrderService {
 	return &GetOrderService{c: c}
 }
 
@@ -427,7 +446,7 @@ func (c *Client) NewListOrdersService() *ListOrdersService {
 }
 
 // NewGetAccountService init getting account service
-func (c *Client) NewGetAccountService() *GetAccountService {
+func (c *Client) NewGetAccountService() BinanceGetAccountService {
 	return &GetAccountService{c: c}
 }
 
@@ -462,7 +481,7 @@ func (c *Client) NewGetAccountSnapshotService() *GetAccountSnapshotService {
 }
 
 // NewListTradesService init listing trades service
-func (c *Client) NewListTradesService() *ListTradesService {
+func (c *Client) NewListTradesService() BinanceListTradesService {
 	return &ListTradesService{c: c}
 }
 
@@ -472,7 +491,7 @@ func (c *Client) NewHistoricalTradesService() *HistoricalTradesService {
 }
 
 // NewListDepositsService init listing deposits service
-func (c *Client) NewListDepositsService() *ListDepositsService {
+func (c *Client) NewListDepositsService() BinanceListDepositsService {
 	return &ListDepositsService{c: c}
 }
 
@@ -482,22 +501,22 @@ func (c *Client) NewGetDepositAddressService() *GetDepositsAddressService {
 }
 
 // NewCreateWithdrawService init creating withdraw service
-func (c *Client) NewCreateWithdrawService() *CreateWithdrawService {
+func (c *Client) NewCreateWithdrawService() BinanceCreateWithdrawService {
 	return &CreateWithdrawService{c: c}
 }
 
 // NewListWithdrawsService init listing withdraw service
-func (c *Client) NewListWithdrawsService() *ListWithdrawsService {
+func (c *Client) NewListWithdrawsService() BinanceListWithdrawsService {
 	return &ListWithdrawsService{c: c}
 }
 
 // NewStartUserStreamService init starting user stream service
-func (c *Client) NewStartUserStreamService() *StartUserStreamService {
+func (c *Client) NewStartUserStreamService() BinanceStartUserStreamService {
 	return &StartUserStreamService{c: c}
 }
 
 // NewKeepaliveUserStreamService init keep alive user stream service
-func (c *Client) NewKeepaliveUserStreamService() *KeepaliveUserStreamService {
+func (c *Client) NewKeepaliveUserStreamService() BinanceKeepaliveUserStreamService {
 	return &KeepaliveUserStreamService{c: c}
 }
 
@@ -507,7 +526,7 @@ func (c *Client) NewCloseUserStreamService() *CloseUserStreamService {
 }
 
 // NewExchangeInfoService init exchange info service
-func (c *Client) NewExchangeInfoService() *ExchangeInfoService {
+func (c *Client) NewExchangeInfoService() BinanceExchangeInfoService {
 	return &ExchangeInfoService{c: c}
 }
 
@@ -682,7 +701,7 @@ func (c *Client) NewUserUniversalTransferService() *CreateUserUniversalTransferS
 }
 
 // NewAllCoinsInformation
-func (c *Client) NewGetAllCoinsInfoService() *GetAllCoinsInfoService {
+func (c *Client) NewGetAllCoinsInfoService() BinanceGetAllCoinsInfoService {
 	return &GetAllCoinsInfoService{c: c}
 }
 
@@ -712,6 +731,6 @@ func (c *Client) NewConvertTradeHistoryService() *ConvertTradeHistoryService {
 }
 
 // NewTradeFeeService init trade fee service
-func (c *Client) NewTradeFeeService() *TradeFeeService {
+func (c *Client) NewTradeFeeService() BinanceTradeFeeService {
 	return &TradeFeeService{c: c}
 }

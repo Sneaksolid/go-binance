@@ -6,6 +6,16 @@ import (
 	"net/http"
 )
 
+type BinanceListTradesService interface {
+	Symbol(symbol string) BinanceListTradesService
+	StartTime(startTime int64) BinanceListTradesService
+	EndTime(endTime int64) BinanceListTradesService
+	Limit(limit int) BinanceListTradesService
+	FromID(fromID int64) BinanceListTradesService
+	OrderId(OrderId int64) BinanceListTradesService
+	Do(ctx context.Context, opts ...RequestOption) (res []*TradeV3, err error)
+}
+
 // ListTradesService list trades
 type ListTradesService struct {
 	c         *Client
@@ -18,37 +28,37 @@ type ListTradesService struct {
 }
 
 // Symbol set symbol
-func (s *ListTradesService) Symbol(symbol string) *ListTradesService {
+func (s *ListTradesService) Symbol(symbol string) BinanceListTradesService {
 	s.symbol = symbol
 	return s
 }
 
 // StartTime set starttime
-func (s *ListTradesService) StartTime(startTime int64) *ListTradesService {
+func (s *ListTradesService) StartTime(startTime int64) BinanceListTradesService {
 	s.startTime = &startTime
 	return s
 }
 
 // EndTime set endtime
-func (s *ListTradesService) EndTime(endTime int64) *ListTradesService {
+func (s *ListTradesService) EndTime(endTime int64) BinanceListTradesService {
 	s.endTime = &endTime
 	return s
 }
 
 // Limit set limit
-func (s *ListTradesService) Limit(limit int) *ListTradesService {
+func (s *ListTradesService) Limit(limit int) BinanceListTradesService {
 	s.limit = &limit
 	return s
 }
 
 // FromID set fromID
-func (s *ListTradesService) FromID(fromID int64) *ListTradesService {
+func (s *ListTradesService) FromID(fromID int64) BinanceListTradesService {
 	s.fromID = &fromID
 	return s
 }
 
 // OrderId set OrderId
-func (s *ListTradesService) OrderId(OrderId int64) *ListTradesService {
+func (s *ListTradesService) OrderId(OrderId int64) BinanceListTradesService {
 	s.orderId = &OrderId
 	return s
 }
