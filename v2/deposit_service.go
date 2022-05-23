@@ -6,6 +6,16 @@ import (
 	"net/http"
 )
 
+type BinanceListDepositsService interface {
+	Coin(coin string) BinanceListDepositsService
+	Status(status int) BinanceListDepositsService
+	StartTime(startTime int64) BinanceListDepositsService
+	EndTime(endTime int64) BinanceListDepositsService
+	Offset(offset int) BinanceListDepositsService
+	Limit(limit int) BinanceListDepositsService
+	Do(ctx context.Context) (res []*Deposit, err error)
+}
+
 // ListDepositsService fetches deposit history.
 //
 // See https://binance-docs.github.io/apidocs/spot/en/#deposit-history-user_data
@@ -20,39 +30,39 @@ type ListDepositsService struct {
 }
 
 // Coin sets the coin parameter.
-func (s *ListDepositsService) Coin(coin string) *ListDepositsService {
+func (s *ListDepositsService) Coin(coin string) BinanceListDepositsService {
 	s.coin = &coin
 	return s
 }
 
 // Status sets the status parameter.
-func (s *ListDepositsService) Status(status int) *ListDepositsService {
+func (s *ListDepositsService) Status(status int) BinanceListDepositsService {
 	s.status = &status
 	return s
 }
 
 // StartTime sets the startTime parameter.
 // If present, EndTime MUST be specified. The difference between EndTime - StartTime MUST be between 0-90 days.
-func (s *ListDepositsService) StartTime(startTime int64) *ListDepositsService {
+func (s *ListDepositsService) StartTime(startTime int64) BinanceListDepositsService {
 	s.startTime = &startTime
 	return s
 }
 
 // EndTime sets the endTime parameter.
 // If present, StartTime MUST be specified. The difference between EndTime - StartTime MUST be between 0-90 days.
-func (s *ListDepositsService) EndTime(endTime int64) *ListDepositsService {
+func (s *ListDepositsService) EndTime(endTime int64) BinanceListDepositsService {
 	s.endTime = &endTime
 	return s
 }
 
 // Offset set offset
-func (s *ListDepositsService) Offset(offset int) *ListDepositsService {
+func (s *ListDepositsService) Offset(offset int) BinanceListDepositsService {
 	s.offset = &offset
 	return s
 }
 
 // Limit set limit
-func (s *ListDepositsService) Limit(limit int) *ListDepositsService {
+func (s *ListDepositsService) Limit(limit int) BinanceListDepositsService {
 	s.limit = &limit
 	return s
 }

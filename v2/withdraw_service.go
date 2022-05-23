@@ -6,6 +6,18 @@ import (
 	"net/http"
 )
 
+type BinanceCreateWithdrawService interface {
+	Coin(v string) BinanceCreateWithdrawService
+	WithdrawOrderID(v string) BinanceCreateWithdrawService
+	Network(v string) BinanceCreateWithdrawService
+	Address(v string) BinanceCreateWithdrawService
+	AddressTag(v string) BinanceCreateWithdrawService
+	Amount(v string) BinanceCreateWithdrawService
+	TransactionFeeFlag(v bool) BinanceCreateWithdrawService
+	Name(v string) BinanceCreateWithdrawService
+	Do(ctx context.Context) (*CreateWithdrawResponse, error)
+}
+
 // CreateWithdrawService submits a withdraw request.
 //
 // See https://binance-docs.github.io/apidocs/spot/en/#withdraw
@@ -22,49 +34,49 @@ type CreateWithdrawService struct {
 }
 
 // Coin sets the coin parameter (MANDATORY).
-func (s *CreateWithdrawService) Coin(v string) *CreateWithdrawService {
+func (s *CreateWithdrawService) Coin(v string) BinanceCreateWithdrawService {
 	s.coin = v
 	return s
 }
 
 // WithdrawOrderID sets the withdrawOrderID parameter.
-func (s *CreateWithdrawService) WithdrawOrderID(v string) *CreateWithdrawService {
+func (s *CreateWithdrawService) WithdrawOrderID(v string) BinanceCreateWithdrawService {
 	s.withdrawOrderID = &v
 	return s
 }
 
 // Network sets the network parameter.
-func (s *CreateWithdrawService) Network(v string) *CreateWithdrawService {
+func (s *CreateWithdrawService) Network(v string) BinanceCreateWithdrawService {
 	s.network = &v
 	return s
 }
 
 // Address sets the address parameter (MANDATORY).
-func (s *CreateWithdrawService) Address(v string) *CreateWithdrawService {
+func (s *CreateWithdrawService) Address(v string) BinanceCreateWithdrawService {
 	s.address = v
 	return s
 }
 
 // AddressTag sets the addressTag parameter.
-func (s *CreateWithdrawService) AddressTag(v string) *CreateWithdrawService {
+func (s *CreateWithdrawService) AddressTag(v string) BinanceCreateWithdrawService {
 	s.addressTag = &v
 	return s
 }
 
 // Amount sets the amount parameter (MANDATORY).
-func (s *CreateWithdrawService) Amount(v string) *CreateWithdrawService {
+func (s *CreateWithdrawService) Amount(v string) BinanceCreateWithdrawService {
 	s.amount = v
 	return s
 }
 
 // TransactionFeeFlag sets the transactionFeeFlag parameter.
-func (s *CreateWithdrawService) TransactionFeeFlag(v bool) *CreateWithdrawService {
+func (s *CreateWithdrawService) TransactionFeeFlag(v bool) BinanceCreateWithdrawService {
 	s.transactionFeeFlag = &v
 	return s
 }
 
 // Name sets the name parameter.
-func (s *CreateWithdrawService) Name(v string) *CreateWithdrawService {
+func (s *CreateWithdrawService) Name(v string) BinanceCreateWithdrawService {
 	s.name = &v
 	return s
 }
@@ -116,6 +128,18 @@ type CreateWithdrawResponse struct {
 // ListWithdrawsService fetches withdraw history.
 //
 // See https://binance-docs.github.io/apidocs/spot/en/#withdraw-history-supporting-network-user_data
+
+type BinanceListWithdrawsService interface {
+	Coin(coin string) BinanceListWithdrawsService
+	WithdrawOrderId(withdrawOrderId string) BinanceListWithdrawsService
+	Status(status int) BinanceListWithdrawsService
+	StartTime(startTime int64) BinanceListWithdrawsService
+	EndTime(endTime int64) BinanceListWithdrawsService
+	Offset(offset int) BinanceListWithdrawsService
+	Limit(limit int) BinanceListWithdrawsService
+	Do(ctx context.Context) (res []*Withdraw, err error)
+}
+
 type ListWithdrawsService struct {
 	c               *Client
 	coin            *string
@@ -128,45 +152,45 @@ type ListWithdrawsService struct {
 }
 
 // Coin sets the coin parameter.
-func (s *ListWithdrawsService) Coin(coin string) *ListWithdrawsService {
+func (s *ListWithdrawsService) Coin(coin string) BinanceListWithdrawsService {
 	s.coin = &coin
 	return s
 }
 
 // WithdrawOrderId sets the withdrawOrderId parameter.
-func (s *ListWithdrawsService) WithdrawOrderId(withdrawOrderId string) *ListWithdrawsService {
+func (s *ListWithdrawsService) WithdrawOrderId(withdrawOrderId string) BinanceListWithdrawsService {
 	s.withdrawOrderId = &withdrawOrderId
 	return s
 }
 
 // Status sets the status parameter.
-func (s *ListWithdrawsService) Status(status int) *ListWithdrawsService {
+func (s *ListWithdrawsService) Status(status int) BinanceListWithdrawsService {
 	s.status = &status
 	return s
 }
 
 // StartTime sets the startTime parameter.
 // If present, EndTime MUST be specified. The difference between EndTime - StartTime MUST be between 0-90 days.
-func (s *ListWithdrawsService) StartTime(startTime int64) *ListWithdrawsService {
+func (s *ListWithdrawsService) StartTime(startTime int64) BinanceListWithdrawsService {
 	s.startTime = &startTime
 	return s
 }
 
 // EndTime sets the endTime parameter.
 // If present, StartTime MUST be specified. The difference between EndTime - StartTime MUST be between 0-90 days.
-func (s *ListWithdrawsService) EndTime(endTime int64) *ListWithdrawsService {
+func (s *ListWithdrawsService) EndTime(endTime int64) BinanceListWithdrawsService {
 	s.endTime = &endTime
 	return s
 }
 
 // Offset set offset
-func (s *ListWithdrawsService) Offset(offset int) *ListWithdrawsService {
+func (s *ListWithdrawsService) Offset(offset int) BinanceListWithdrawsService {
 	s.offset = &offset
 	return s
 }
 
 // Limit set limit
-func (s *ListWithdrawsService) Limit(limit int) *ListWithdrawsService {
+func (s *ListWithdrawsService) Limit(limit int) BinanceListWithdrawsService {
 	s.limit = &limit
 	return s
 }

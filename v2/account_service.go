@@ -6,6 +6,10 @@ import (
 	"net/http"
 )
 
+type BinanceGetAccountService interface {
+	Do(ctx context.Context, opts ...RequestOption) (res *Account, err error)
+}
+
 // GetAccountService get account info
 type GetAccountService struct {
 	c *Client

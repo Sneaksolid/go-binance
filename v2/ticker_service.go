@@ -51,6 +51,11 @@ type BookTicker struct {
 	AskQuantity string `json:"askQty"`
 }
 
+type BinanceListPricesService interface {
+	Symbol(symbol string) BinanceListPricesService
+	Do(ctx context.Context, opts ...RequestOption) (res []*SymbolPrice, err error)
+}
+
 // ListPricesService list latest price for a symbol or symbols
 type ListPricesService struct {
 	c      *Client
@@ -58,7 +63,7 @@ type ListPricesService struct {
 }
 
 // Symbol set symbol
-func (s *ListPricesService) Symbol(symbol string) *ListPricesService {
+func (s *ListPricesService) Symbol(symbol string) BinanceListPricesService {
 	s.symbol = &symbol
 	return s
 }
